@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+    <li><a href="{% url 'answers' %}">Answers</a></li>
+    <li><a href="{% url 'questions' %}">Questions</a></li>
+    <li><a href="{% url 'polls' %}">Polls</a></li>
+</ul>
+
+{% endblock %}

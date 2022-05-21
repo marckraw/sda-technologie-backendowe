@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Welcome to Questions</h1>
+<a href="{% url 'index' %}">Return to index page</a>
+
+{% for a in answers %}
+    <div>
+        <div>{{ a }}</div>
+    </div>
+{% endfor %}
+
+{% endblock %}
