@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Welcome to movies list view</h1>
+<a href="{% url 'index' %}">Return to index page</a>
+
+{% for p in object_list %}
+    <div>
+        <h2>{{ p }}</h2>
+        <div>
+            {% for question in p.questions.all %}
+             <p>{{ question }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

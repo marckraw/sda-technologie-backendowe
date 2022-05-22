@@ -9,13 +9,13 @@ class PollView(View):
     def get(self, request):
         return render(
             request,
-            template_name="polls.html",
+            template_name="polls/polls.html",
             context={"polls": Poll.objects.all()}
         )
 
 
 class PollTemplateView(TemplateView):
-    template_name = 'polls.html'
+    template_name = 'polls/polls.html'
     extra_context = {"polls": Poll.objects.all()}
 
 
@@ -28,12 +28,12 @@ class AnswerView(View):
     def get(self, request):
         return render(
             request,
-            template_name="answers.html",
+            template_name="polls/answers.html",
             context={"answers": Answer.objects.all()}
         )
 
 class AnswerTemplateView(TemplateView):
-    template_name = 'answers.html'
+    template_name = 'polls/answers.html'
     extra_context = {"answers": Answer.objects.all()}
 
 class AnswerListView(ListView):
@@ -44,12 +44,12 @@ class QuestionView(View):
     def get(self, request):
         return render(
             request,
-            template_name="questions.html",
+            template_name="polls/questions.html",
             context={"questions": Question.objects.all()}
         )
 
 class QuestionTemplateView(TemplateView):
-    template_name = 'questions.html'
+    template_name = 'polls/questions.html'
     extra_context = {"questions": Question.objects.all()}
 
 class QuestionListView(ListView):
