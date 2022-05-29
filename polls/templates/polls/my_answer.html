@@ -1,0 +1,9 @@
+<{% extends "base.html" %}
+{% block content %}
+    <p>ANSWER ID: {{ answer.id }}</p>
+    <p>ANSWER TEXT: {{ answer.answer_text }}</p>
+    <p>QUESTION ID: {{ answer.question.id }}</p>
+    <p><a href="{% url 'polls_class_views:answers-update-view' pk=answer.pk %}">UPDATE</a></p>
+    <p><a href="{% url 'polls_class_views:answers-delete-view' pk=answer.pk %}">DELETE</a></p>
+    <a href="{% url 'polls_views:index' %}">RETURN TO INDEX PAGE</a>
+{% endblock %}

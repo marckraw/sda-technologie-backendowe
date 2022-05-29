@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Welcome to HollyMovies</h1>
-{% for adjective in adjectives %}
-    {%if adjective != 'cruel' %}
+    <h1>Welcome to My Polls!</h1>
+    {% for adjective in adjectives %}
+      {% if adjective != 'cruel' %}
         <p>This is a {{ adjective }} world...</p>
-    {% endif %}
-{% endfor %}
-
+      {% endif %}
+    {% endfor %}
 {% endblock %}

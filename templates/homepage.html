@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+    <p>Welcome {{ username }} </p>
+    <p><a href="{% url 'movies:movies-homepage' %}">MOVIES Application</a></p>
+    <p><a href="{% url 'polls_views:index' %}">POLLS Application</a></p>
+{% endblock %}

@@ -1,42 +1,35 @@
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .models import Poll, Answer, Question
-from .forms import NameForm, PollForm, QuestionForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
+from .forms import AnswerForm, NameForm, PollForm, QuestionForm
+from .models import Answer, Poll, Question
 
 
-def question_form(request):
-    form = QuestionForm(request.POST or None)
-
-    if form.is_valid():
-        question_text = form.cleaned_data['question_text']
-        pub_date = form.cleaned_data['pub_date']
-        poll = form.cleaned_data['poll']
-        Question.objects.create(
-            question_text=question_text,
-            pub_date=pub_date,
-            poll=poll
-        )
-        return HttpResponse("It Worked!")
-
+def hello(request, s0):
+    s1 = request.GET.get("s1", "")
     return render(
         request,
-        template_name="polls/form.html",
-        context={'form': form}
+        template_name="polls/hello.html",
+        context={"adjectives": [s0, s1, "beautiful", "horrible"]}
     )
 
-def poll_form(request):
-    form = PollForm(request.POST or None)
 
-    if form.is_valid():
-        name = form.cleaned_data["name"]
-        Poll.objects.create(name=name)
-        return HttpResponse("It Worked!")
+def hello_year(request):
+    year = request.GET.get("year", "No key in the dictionary!")
+    # return HttpResponse(f"Optional argument: {year}")
+    return HttpResponseRedirect(reverse("polls_views:answers-list-view"))
 
+
+def animals(request):
+    animals_list = request.GET.get("animals", "").split(",")
     return render(
         request,
-        template_name="polls/form.html",
-        context={'form': form}
+        template_name="polls/my_template.html",
+        context={"animals": animals_list}
     )
+
 
 def get_name(request):
     if request.method == "POST":
@@ -58,12 +51,12 @@ def get_name(request):
 def index(request):
     return render(
         request,
-        template_name='polls/index.html'
+        template_name="polls/index.html"
     )
 
 
+@login_required
 def polls(request):
-    print("twoja stara")
     return render(
         request,
         template_name="polls/polls.html",
@@ -87,24 +80,45 @@ def questions(request):
     )
 
 
-def hello(request, s0):
-    s1 = request.GET.get('s1', '')
+def poll_form(request):
+    form = PollForm(request.POST or None)
+    if form.is_valid():
+        name = form.cleaned_data["name"]
+        Poll.objects.create(name=name)
+        return render(
+            request,
+            template_name="polls/polls.html",
+            context={"polls": Poll.objects.all()}
+        )
     return render(
-        request, template_name='polls/hello.html',
-        context={'adjectives': [s0, s1, 'beautiful', 'wonderful']}
+        request,
+        template_name="polls/form.html",
+        context={"form": form}
     )
 
 
-def animals(request):
-    animals_list = request.GET.get('animals', '')
-
+def question_form(request):
+    form = QuestionForm(request.POST or None)
+    if form.is_valid():
+        question_text = form.cleaned_data["question_text"]
+        poll = form.cleaned_data["poll"]
+        Question.objects.create(question_text=question_text, poll=poll)
+        return HttpResponse("IT WORKED")
     return render(
-        request, template_name="polls/animals.html",
-        context={'animals': animals_list.split(",")}
+        request,
+        template_name="polls/form.html",
+        context={"form": form}
     )
 
 
-def hello_year(request, year):
-    return HttpResponse(f"Hello, world! {year}")
-
-
+def answer_form(request):
+    form = AnswerForm(request.POST or None)
+    if form.is_valid():
+        answer_text = form.cleaned_data["answer_text"]
+        Answer.objects.create(answer_text=answer_text)
+        return HttpResponse("IT WORKED")
+    return render(
+        request,
+        template_name="polls/form.html",
+        context={"form": form}
+    )

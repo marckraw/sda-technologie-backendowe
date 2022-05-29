@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Welcome to Questions</h1>
-<a href="{% url 'index' %}">Return to index page</a>
-
-{% for a in answers %}
-    <div>
-        <div>{{ a }}</div>
-    </div>
-{% endfor %}
-
+    {% for a in answers %}
+        <p><a href="{% url 'polls_class_views:answers-detail-view' pk=a.pk %}">{{ a }}</a></p>
+    {% endfor %}
+    <a href="{% url 'polls_views:index' %}">RETURN TO INDEX PAGE</a>
 {% endblock %}
